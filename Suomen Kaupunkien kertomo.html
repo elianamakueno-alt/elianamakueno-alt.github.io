@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Tutustu Helsinkiin, Tampereeseen, Ouluun ja Vaasaan sekä siihen, millaista niissä voisi olla asua.">
+  <title>Suomen kaupungit – missä olisi hyvä asua?</title>
+
+  <style>
+    :root {
+      --green: #1c5c4b;
+      --green-dark: #123e34;
+      --mint: #e9f2ed;
+      --cream: #fbf8f1;
+      --text: #24332d;
+      --muted: #64736c;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      background: var(--cream);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.65;
+    }
+
+    .hero {
+      min-height: 430px;
+      display: grid;
+      place-items: center;
+      padding: 4rem 1.25rem;
+      color: white;
+      text-align: center;
+      background:
+        linear-gradient(90deg, rgb(12 42 35 / 78%), rgb(12 42 35 / 35%)),
+        url("https://commons.wikimedia.org/wiki/Special:FilePath/Helsinki_Skyline_(52432702085).jpg")
+        center 45% / cover;
+    }
+
+    .hero-content {
+      max-width: 780px;
+    }
+
+    .hero h1 {
+      margin: 0 0 1rem;
+      font-size: clamp(2.5rem, 7vw, 5rem);
+      line-height: 1.05;
+    }
+
+    .hero p {
+      margin: 0 auto 1.5rem;
+      max-width: 650px;
+      font-size: 1.2rem;
+    }
+
+    .hero-link {
+      display: inline-block;
+      padding: 0.8rem 1.2rem;
+      border-radius: 999px;
+      color: var(--green-dark);
+      background: white;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .hero-link:hover {
+      background: var(--mint);
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      padding: 0.8rem;
+      background: rgb(251 248 241 / 95%);
+      border-bottom: 1px solid #e2e8e3;
+      backdrop-filter: blur(8px);
+    }
+
+    nav a {
+      padding: 0.45rem 0.85rem;
+      border-radius: 999px;
+      color: var(--green-dark);
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    nav a:hover {
+      background: var(--mint);
+    }
+
+    main {
+      width: min(1100px, calc(100% - 2rem));
+      margin: 0 auto;
+    }
+
+    .intro {
+      max-width: 760px;
+      margin: 3rem auto;
+      text-align: center;
+    }
+
+    .intro h2,
+    .closing h2 {
+      color: var(--green-dark);
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      line-height: 1.2;
+    }
+
+    .city-card {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      overflow: hidden;
+      margin: 2rem 0;
+      border-radius: 20px;
+      background: var(--white);
+      box-shadow: 0 12px 35px rgb(22 53 42 / 10%);
+      scroll-margin-top: 85px;
+    }
+
+    .city-card:nth-of-type(even) .city-photo {
+      order: 2;
+    }
+
+    .city-photo {
+      min-height: 370px;
+      background: #dce8e0;
+    }
+
+    .city-photo img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 370px;
+      object-fit: cover;
+    }
+
+    .city-copy {
+      align-self: center;
+      padding: clamp(1.5rem, 4vw, 3rem);
+    }
+
+    .city-label {
+      margin: 0 0 0.35rem;
+      color: #51816e;
+      font-size: 0.8rem;
+      font-weight: bold;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .city-copy h2 {
+      margin: 0 0 0.9rem;
+      color: var(--green-dark);
+      font-size: 2.2rem;
+    }
+
+    .city-copy h3 {
+      margin: 1.1rem 0 0.35rem;
+      color: var(--green);
+      font-size: 1.05rem;
+    }
+
+    .city-copy p {
+      margin: 0;
+    }
+
+    .city-copy ul {
+      margin: 0.4rem 0 0;
+      padding-left: 1.2rem;
+    }
+
+    .closing {
+      margin: 3rem 0;
+      padding: clamp(1.5rem, 5vw, 3rem);
+      border-radius: 20px;
+      background: var(--mint);
+    }
+
+    .closing h2 {
+      margin-top: 0;
+    }
+
+    .closing p {
+      max-width: 800px;
+    }
+
+    footer {
+      padding: 2rem 1rem;
+      color: #eaf2ed;
+      background: var(--green-dark);
+      text-align: center;
+    }
+
+    footer a {
+      color: white;
+    }
+
+    @media (max-width: 720px) {
+      .city-card {
+        grid-template-columns: 1fr;
+      }
+
+      .city-card:nth-of-type(even) .city-photo {
+        order: 0;
+      }
+
+      .city-photo,
+      .city-photo img {
+        min-height: 240px;
+        max-height: 300px;
+      }
+
+      .hero {
+        min-height: 360px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="hero">
+    <div class="hero-content">
+      <h1>Neljä kaupunkia,<br>monta tapaa elää</h1>
+      <p>
+        Tutustu Helsinkiin, Tampereeseen, Ouluun ja Vaasaan.
+        Löydä kaupunkien erityispiirteitä ja mieti, mikä niistä sopisi sinulle.
+      </p>
+      <a class="hero-link" href="#kaupungit">Tutustu kaupunkeihin</a>
+    </div>
+  </header>
+
+  <nav aria-label="Kaupunkien navigaatio">
+    <a href="#helsinki">Helsinki</a>
+    <a href="#tampere">Tampere</a>
+    <a href="#oulu">Oulu</a>
+    <a href="#vaasa">Vaasa</a>
+  </nav>
+
+  <main id="kaupungit">
+    <section class="intro">
+      <h2>Mikä kaupunki tuntuisi omalta?</h2>
+      <p>
+        Toiselle tärkeintä ovat työpaikat ja vilkas kulttuurielämä,
+        toiselle rauhallisempi arki, luonto tai meri lähellä.
+        Tässä muutamia ajatuksia siitä, mitä nämä neljä kaupunkia tarjoavat.
+      </p>
+    </section>
+
+    <article class="city-card" id="helsinki">
+      <div class="city-photo">
+        <img
+          src="https://commons.wikimedia.org/wiki/Special:FilePath/Helsinki_Skyline_(52432702085).jpg"
+          alt="Helsingin siluetti ja rakennuksia meren äärellä"
+          loading="lazy"
+        >
+      </div>
+      <div class="city-copy">
+        <p class="city-label">Pääkaupunki · merenrantakaupunki</p>
+        <h2>Helsinki</h2>
+        <p>
+          Helsinki on Suomen pääkaupunki ja suuri, kansainvälinen kaupunki
+          meren rannalla. Keskustassa on kauppoja, museoita, ravintoloita
+          ja tapahtumia. Kaupungissa on myös rantoja, puistoja ja saaria,
+          joille pääsee esimerkiksi lautalla.
+        </p>
+        <h3>Miksi siellä voisi olla hyvä asua?</h3>
+        <ul>
+          <li>Paljon palveluita, kulttuuria ja harrastusmahdollisuuksia.</li>
+          <li>Laajat joukkoliikenneyhteydet ja yhteydet muualle Suomeen.</li>
+          <li>Meri, puistot ja ulkoilupaikat ovat osa kaupunkiympäristöä.</li>
+        </ul>
+        <p>
+          <strong>Kannattaa huomioida:</strong> suuri kaupunki voi olla
+          vilkas, ja asumisen hinnat voivat olla korkeita.
+        </p>
+      </div>
+    </article>
+
+    <article class="city-card" id="tampere">
+      <div class="city-photo">
+        <img
+          src="https://commons.wikimedia.org/wiki/Special:FilePath/Tampere,_Finland_-_panoramio_(20).jpg"
+          alt="Näkymä Tampereelle ja kaupungin ympäristön vesistöihin"
+          loading="lazy"
+        >
+      </div>
+      <div class="city-copy">
+        <p class="city-label">Järvien kaupunki · kulttuuria ja opiskelua</p>
+        <h2>Tampere</h2>
+        <p>
+          Tampere sijaitsee Näsijärven ja Pyhäjärven välissä.
+          Tammerkoski kulkee kaupungin keskustan halki, ja vanhat
+          punatiiliset tehdasrakennukset muistuttavat kaupungin
+          teollisuushistoriasta. Tampereella on myös teattereita,
+          museoita, tapahtumia ja yliopistoja.
+        </p>
+        <h3>Miksi siellä voisi olla hyvä asua?</h3>
+        <ul>
+          <li>Kaupungin palvelut ja tapahtumat ovat lähellä järviluontoa.</li>
+          <li>Opiskelu-, kulttuuri- ja harrastusmahdollisuuksia on paljon.</li>
+          <li>Keskustaa palvelee raitiotie, ja liikkua voi myös bussilla.</li>
+        </ul>
+        <p>
+          <strong>Kannattaa huomioida:</strong> suosittu kaupunki kasvaa,
+          joten asuminen ja liikkuminen kannattaa suunnitella omien tarpeiden mukaan.
+        </p>
+      </div>
+    </article>
+
+    <article class="city-card" id="oulu">
+      <div class="city-photo">
+        <img
+          src="https://commons.wikimedia.org/wiki/Special:FilePath/City_archive_of_Oulu.JPG"
+          alt="Oulun kaupunginarkisto"
+          loading="lazy"
+        >
+      </div>
+      <div class="city-copy">
+        <p class="city-label">Pohjois-Suomi · teknologiaa ja merenrantaa</p>
+        <h2>Oulu</h2>
+        <p>
+          Oulu sijaitsee Perämeren rannalla Pohjois-Pohjanmaalla.
+          Se on yliopistokaupunki, jossa yhdistyvät teknologia,
+          opiskelijaelämä ja pohjoisen luonnon läheisyys.
+          Oulussa voi tutustua esimerkiksi jokisuistoon, puistoihin
+          ja merenrannan ulkoilureitteihin.
+        </p>
+        <h3>Miksi siellä voisi olla hyvä asua?</h3>
+        <ul>
+          <li>Yliopisto ja teknologiayritykset tuovat opiskelu- ja työmahdollisuuksia.</li>
+          <li>Luontoon ja ulkoilureiteille pääsee helposti.</li>
+          <li>Pohjoinen sijainti tarjoaa omanlaisensa vuodenajat ja talvimaisemat.</li>
+        </ul>
+        <p>
+          <strong>Kannattaa huomioida:</strong> talvi on pitkä ja pimeämpi
+          kuin etelässä, ja etäisyydet muualle Suomeen ovat suuremmat.
+        </p>
+      </div>
+    </article>
+
+    <article class="city-card" id="vaasa">
+      <div class="city-photo">
+        <img
+          src="https://commons.wikimedia.org/wiki/Special:FilePath/Vaasa_Town_Hall.jpg"
+          alt="Vaasan kaupungintalo"
+          loading="lazy"
+        >
+      </div>
+      <div class="city-copy">
+        <p class="city-label">Pohjanmaan rannikko · kaksikielinen kaupunki</p>
+        <h2>Vaasa</h2>
+        <p>
+          Vaasa sijaitsee Pohjanmaan rannikolla. Kaupungissa näkyvät sekä
+          suomen- että ruotsinkielinen kulttuuri. Merenkurkun saaristo
+          tarjoaa saaristomaisemia ja ulkoilukohteita, ja Vaasan satamasta
+          kulkee laivayhteys Ruotsiin.
+        </p>
+        <h3>Miksi siellä voisi olla hyvä asua?</h3>
+        <ul>
+          <li>Meri ja saaristo tuovat luontoa ja ulkoilumahdollisuuksia lähelle.</li>
+          <li>Kaksikielisyys tarjoaa mahdollisuuden käyttää molempia kotimaisia kieliä.</li>
+          <li>Kaupungissa on korkeakouluja, palveluita ja yhteyksiä Ruotsiin.</li>
+        </ul>
+        <p>
+          <strong>Kannattaa huomioida:</strong> Vaasa on Helsinkiä pienempi,
+          joten oman alan työpaikkojen ja palveluiden tarjonta voi olla rajatumpaa.
+        </p>
+      </div>
+    </article>
+
+    <section class="closing">
+      <h2>Valitse omien tarpeidesi mukaan</h2>
+      <p>
+        Helsinki voi sopia ihmiselle, joka haluaa suuren kaupungin palveluita
+        ja vilkasta elämää. Tampere yhdistää kaupunkikulttuuria ja järviluontoa.
+        Oulu voi kiinnostaa pohjoisesta luonnosta ja teknologiasta innostunutta.
+        Vaasa taas tarjoaa rannikkoa, saaristoa ja kaksikielistä arkea.
+      </p>
+      <p>
+        Hyvä asuinpaikka riippuu esimerkiksi työstä tai opiskelusta,
+        asumisen hinnasta, kulkuyhteyksistä ja siitä, millaisesta ympäristöstä
+        itse pitää.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Suomen kaupungit – pieni tutustumissivu</p>
+    <p>Kuvat: Wikimedia Commons. Avaa kuvan lähde napsauttamalla:</p>
+    <p>
+      <a href="https://commons.wikimedia.org/wiki/File:Helsinki_Skyline_(52432702085).jpg" target="_blank" rel="noopener">Helsinki</a> ·
+      <a href="https://commons.wikimedia.org/wiki/File:Tampere,_Finland_-_panoramio_(20).jpg" target="_blank" rel="noopener">Tampere</a> ·
+      <a href="https://commons.wikimedia.org/wiki/File:City_archive_of_Oulu.JPG" target="_blank" rel="noopener">Oulu</a> ·
+      <a href="https://commons.wikimedia.org/wiki/File:Vaasa_Town_Hall.jpg" target="_blank" rel="noopener">Vaasa</a>
+    </p>
+  </footer>
+</body>
+</html>
